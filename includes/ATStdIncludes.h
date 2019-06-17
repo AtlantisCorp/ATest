@@ -17,5 +17,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <mutex>
+#include <thread>
+#include <chrono>
 
 #endif /* ATStdIncludes_h */

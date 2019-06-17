@@ -29,6 +29,8 @@ namespace ATest
         
         UnitGroup() = default;
         
+        ~UnitGroup() = default;
+        
         void addUnit(const std::shared_ptr < UnitBase >& subunit);
         
         bool run();

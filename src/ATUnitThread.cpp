@@ -33,12 +33,16 @@ namespace ATest
         
         m_is_running = true;
         
-        std::lock_guard < std::mutex > lock(m_mutex);
-        {
-            bool result = group->run();
-            m_is_running = false;
-            return result;
-        }
+        m_running_thread = std::async([this, group](){
+            std::lock_guard < std::mutex > lock(m_mutex);
+            {
+                bool result = group->run();
+                m_is_running = false;
+                return result;
+            }
+        });
+        
+        return !m_is_running;
     }
     
     bool UnitThread::run(const std::chrono::milliseconds &waiting_time)
@@ -85,5 +89,11 @@ namespace ATest
             std::lock_guard < std::mutex > lock(m_mutex);
             group->addUnit(unit);
         }
+    }
+    
+    bool UnitThread::wait()
+    {
+        m_running_thread.wait();
+        return !m_is_running;
     }
 }

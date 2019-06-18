@@ -20,5 +20,6 @@
 #include <mutex>
 #include <thread>
 #include <chrono>
+#include <future>
 
 #endif /* ATStdIncludes_h */

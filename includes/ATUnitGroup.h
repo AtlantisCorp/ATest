@@ -25,9 +25,11 @@ namespace ATest
         
         std::atomic < size_t > m_last_unit_runned;
         
+        std::atomic < bool > m_should_break_on_error;
+        
     public:
         
-        UnitGroup() = default;
+        UnitGroup();
         
         ~UnitGroup() = default;
         

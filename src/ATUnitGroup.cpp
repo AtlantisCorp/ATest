@@ -10,6 +10,11 @@
 
 namespace ATest
 {
+    UnitGroup::UnitGroup(): m_should_break_on_error(true)
+    {
+        
+    }
+    
     void UnitGroup::addUnit(const std::shared_ptr<UnitBase> &subunit)
     {
         m_subunits[subunit] = Error();
@@ -28,6 +33,13 @@ namespace ATest
             {
                 m_error_happened = true;
                 m_error = Error(ENullSubUnit, "UnitGroup holds a null subunit.");
+                
+                if (!m_should_break_on_error)
+                {
+                    subunit.second = m_error;
+                    continue;
+                }
+                
                 break;
             }
             
@@ -36,6 +48,13 @@ namespace ATest
                 m_error_happened = true;
                 m_error = Error(EReturnedError, "A subunit has returned an error.");
                 m_errored_subunit = subunit.first;
+                
+                if (!m_should_break_on_error)
+                {
+                    subunit.second = m_error;
+                    continue;
+                }
+                
                 break;
             }
             
